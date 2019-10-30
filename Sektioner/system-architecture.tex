@@ -1,12 +1,14 @@
-\chapter{Software arkitektur}
 
 \section{Indledning}
 
-I dette dokument vil der være en beksrivelse af systemets arkitektur. 
-Derudover vil der også være beskrivelse af de valg, der er blevet taget i forhold til arkitekturen igennem hele udviklings processen. 
+I dette dokument vil systemets arkitektur blive gennemgået. 
+Derudover vil der også være beskrivelse af de valg, der er blevet taget i forhold til arkitekturen igennem hele udviklingsprocessen. 
+ 
 
 \section{Systemarkitektur}
-Som det første bliver Systemarkitekturen indledet med et domænemodel over systemet converge. Systemarkitekturen ses på nedstående figur.
+
+Som det første bliver Systemarkitekturen indledet med en domænemodel over systemet converge. Systemarkitekturen ses på nedstående figur.
+
 
 \begin{figure}[ht]
     \centering
@@ -15,22 +17,22 @@ Som det første bliver Systemarkitekturen indledet med et domænemodel over syst
 \label{fig:figure4}
 \end{figure}
 
-Ud fra figur 1.1 kan man se de forskellige muligeheder brugeren har i systemet, samt data, som systemet er nød til at håndtere. Derudover viser fuguren  de eksisterende relationer i domænet, på baggrund af en specifikation af user stories. 
-Samtidig er kravspecifikation og domænemodellen blevet brugt til at finde frem til en række funktionaliteter og hvordan de er afhængige af hinanden. Dette medfør til at hvordan håndtering af de forskellige funktionaliteter sker, såsom: brugeren, login, signup, dashboard, chat, indstillinger, portfolio, kategorier, betaling, søgning og video chat. Ud fra disse information er der blevet udarbejdet et komponent diagram over komponenter som ses på nedstående figur.
+Figur 1.1 viser en oversigt over de muligheder, man kommer til at have som bruger. Dette betyder at Converge systemet skal kunne håndtere flere forskellige interaktion fra brugeren, samt data. 
+Samtidig er kravspecifikation og domænemodellen blevet brugt til at finde frem til en række funktionaliteter og hvordan de er afhængige af hinanden. Dette medfør til at hvordan håndtering af de forskellige funktionaliteter sker, såsom: brugeren, login, signup,dashboard, chat, indstillinger, portfolio, kategorier, betaling, søgning og video chat. Ud fra disse informationer er der blevet udarbejdet et komponent diagram over komponenter som ses på nedstående figur.
 
-\newpage
 \begin{figure}[ht]
     \centering
-\includegraphics[width=0.8\textwidth]{software-architecture/physical-view/component-diagram/component-diagram.pdf}
+\includegraphics[width=1\textwidth]{software-architecture/physical-view/component-diagram/component-diagram.pdf}
 \caption{Viser komponent diagram over det samlede system}
 \label{fig:figure2}
 \end{figure}
 
-Figur 1.2 viser et komponentdiagram over det aktuelle system under udvikling i forskellige høje funktionalitetsniveauer. Hver komponent er ansvarlig for et klart mål inden for hele systemet og interagerer kun med andre væsentlige elementer på et behov-til-kendskabsbasis. Derudover kan vi se ud fra figur 1.2, at presentations komponenterne ligger i en samlet pakke og grunden til at de gør det er, fordi det er her at brugeren interagerer.
+Figur 1.2 viser et komponentdiagram over det aktuelle system under udvikling i forskellige høje funktionalitetsniveauer. Hver komponent er ansvarlig for et klart mål inden for hele systemet og interagerer kun med andre væsentlige elementer på et behov-til-kendskabsbasis. Derudover kan vi se ud fra figur 1.2, at presentations komponenterne ligger i en samlet pakke og grunden til at de gør det er, fordi det er her brugeren interagerer.
 
-Disse funktionaliteter ligger op til at benytte model-view-controller (MVC) arkitekturen, der står for model, view og controller. Model repræsentere business loggik, view viser brugergrænseflade og controller, som er med til at håndterer brugeranmodningen. I dette tilfælde er MVC brugt på flere måder, både i vores services og med hele vores system. På service niveau bruger vi det i ASP.NET Core, med controllers, models og views (json/swagger). På system niveau, bruger vi det, som at applikations services er  controllers, mongodb som model og React/Next som View.
+Disse funktionaliteter ligger op til at benytte model-view-controller (MVC) arkitekturen, der står for model, view og controller. Model repræsenterer business loggik, view viser brugergrænseflade og controller, som er med til at håndterer brugeranmodningen. I dette tilfælde er MVC brugt på flere måder, både i vores services og med hele vores system. På serviceniveau bruger vi det i ASP.NET Core, med controllers, models og views (json/swagger). På system niveau, bruger vi det, som at applikations services er controllers, mongodb som model og React/Next som View.
 
 På nedståendende diagram ses et deployment diagram, som er en viderebygning på figur(component diagram), der med til at visualisere enheder i systemet og kommunikationsforbindelserne mellem dem og placeringen af softwarefiler.
+
 
 \begin{figure}[ht]
     \centering
@@ -39,9 +41,11 @@ På nedståendende diagram ses et deployment diagram, som er en viderebygning p�
 \label{fig:figure2}
 \end{figure}
 
-Ovenstående fgiur viser eksekveringsarkitekturen for systemet, herunder noder såsom softwareudførelsesmiljøer, og det software, der fungerer som en bro, der  forbinder dem. 
+Ovenstående fgiur viser eksekveringsarkitekturen for systemet, herunder noder såsom softwareudførelsesmiljøer, og det software, der fungerer som en bro, der forbinder dem. 
 
-En anden ting figur 1.3 viser er at diagrammet består af to fomer for noder enhedsnoder og en eksekveringsmiljønode. Enhedsnoder er  databehandlingsressourcer med behandlingsfunktioner og evnen til at udføre programmer (pc'er, laptops og mobiltelefoner).  Eksekveringsmiljø er en (software) node, der tilbyder eksekveringsmiljø for specifikke typer komponenter, for eksempel react i dette tilfælde. De to former for noder fortæller om hvilken teknologier de forskellige niveauer benytter sig af og hvordan disse kommunikerer.
+En anden ting figur 1.3 viser er at diagrammet består af to fomer for noder enhedsnoder og en eksekveringsmiljønode. Enhedsnoder er databehandlingsressourcer med behandlingsfunktioner og evnen til at udføre programmer (pc'er, laptops og mobiltelefoner).  Eksekveringsmiljø er en (software) node, der tilbyder eksekveringsmiljø for specifikke typer komponenter, for eksempel react i dette tilfælde. De to former for noder fortæller om hvilken teknologier de forskellige niveauer benytter sig af og hvordan disse kommunikerer.
 
-Derudover er der blevet valgt to forskellige former for programmeringssprog som der skal benyttes i projektet. React, der bruges til front-end og ASP.NET,der bruges til back-end. 
+Derudover er der blevet valgt to forskellige former for programmeringssprog som der skal benyttes i projektet. React, der bruges til front-end og ASP.NET, der bruges til back-end. 
+
+
 
