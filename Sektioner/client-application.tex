@@ -1,1 +1,26 @@
-\chapter{Klient applikation}
+\chapter{Klientapplikation}
+
+\section{Indledning}
+I denne sektion vil der blive redegjort, hvilken teknologi der er blevet brugt til at udvikle klientapplikationen, hvilken tanker/overvejelser er der gjort i forhold til valget og hvorfor er det effektiv for udvikleren.
+
+\section{Web App}
+I starten af projektet blev der udarbejdet en foranalyse til at fremskaffe de informationer, for at kunne organisere og planlægge projektet. Derudover er foranalysen blevet benyttet til at tage stilling til hvad klientapplikationen skule udvikles i. Samtidig er domænemodellen og user stories er taget i betragtning og ud fra disse betragtninger er klientapplikationen udviklet i React. React er SPA, der kan udvikles webapps hurtigt og effektivt med minimal kodning. Hovedmålet med React var at det kunne give den bedst mulige gengivelsesydelse og samtidig var der fokus på individuelle komponenter. Dette betyder at udviklingen af klientapplikationen kunne opdele det komplekse brugergrænseflade til enklere komponenter. 
+
+Der var gjort mange tanker og overvejelser, til at valget faldt over React. En af de overvejelser der var gjort i forhold til at klientapplikationen, blev udviklet i React, er at der skulle spares tid i forhold til kodning. Derfor var React et oplagt valg, da man arbejder med komponenter og det tillader udviklere at nedbryde det komplekse brugergrænseflade. På den måde undgår udvikleren at skulle bekymre sig om hele webappen. Dette er afgørende for at gøre enhver komponent mere intuitiv. En anden overvejelse der blev gjort, var at React har masser af plugins, NEXTJS, Formik og Redux. Disse plugins er blevet benyttet i klientapplikationen, som gør udviklingsmiljøet, bliver nemmer at håndtere for udviklerne. 
+
+Grunden til at Formik er blevet benyttet, er at de fleste formhjælpere gør alt for meget magi og har ofte en betydelig ydeevne forbundet med dem. For at undgå dette, er der blevet brugt Formik biblioteket, som er med til at hjælpe udvikler med de 3 mest irriterende dele:
+
+\begin{itemize}
+    \item At få værdier ind og ud af formtilstand
+    \item  Validering og fejlmeddelelser
+    \item  Indsendelse af form: nem værdi-parsning og fejlformatering via håndteringsfunktioner, der sendes til Formik.
+\end{itemize}
+
+Derudover er der blevet brugt Redux, som hjælper udviklerne i teamet med at skrive applikationer, der opfører sig konsekvent, kører i forskellige miljøer (klient, server) og er lette at teste. Derudover giver det en stor udvikleroplevelse, såsom redigering af live-kode kombineret med en debugger. 
+Den tredje plugin som nævnt tidligere er NEXTJS. NEXTJS fungere som applikations server, som giver et intuitivt sidebaseret routingsystem, Optimerer automatisk statiske sider, når det er mulig, automatisk kodespaltning for hurtigere indlæsning af sider, routing fra klientsiden med optimeret sideudhentning.
+
+
+ 
+
+
+
