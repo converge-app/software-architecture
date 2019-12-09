@@ -1,0 +1,31 @@
+\chapter{Webserver}
+
+Systemet er tænkt som en distribueret server med logiske elementer såsom Login, Betaling i hver deres applikation, hvor applikationen kommunikere over netwærket. Webserveren udsteder et fælles API som kan tilgåes af Web applikationen eller en anden tredjepart. Webserveren har den primære funktion at behandle anmodninger med en given forretningslogik. Beslutningen om at bruge et Web API, er angivet men ikke nødvendigt for produktets udførelse, HTTP platformen er brugt, med JSON som transport protokol. Selve API'et er udstedet som REST endpoint, hvor hvert endpoint er beskrevet som en resource. Gruppen har valgt at undlade HATEOAS (Hypermedia as the Engine of Application State), pga. valget af frontend arkitektur.
+
+Det er besluttet at pakke individuelle applikationer med Docker som transportflade, bruge Kubernetes til skalering og Helm til udrulningen. Samt ASP.NET Core 2.2 af Microsoft som Applikation. Valget af webserver er primært baseret på gruppens erfaringer med platformen, og dets nuværende tilstand som en stabil Webserver.
+
+ASP.NET Core bruger kestrel til at håndtere anmodninger og er egnet til at være transparent og nemt at bruge. Desuden giver ASP.NET Core authentifikation ved konfiguration, hvilket har været helt ideelt for systemet.
+
+Selve webserveren er delt op i services, hver service er pakket som et docker image og udrullet på Kubernetes. Hver service har ansvaret for dets egen database, test, integrationstest osv. Dette er vigtigt for at efterleve de 12 principper for en cloud native platform.
+
+\section{Lagene}
+
+Hver service er indelt i 3 lag, Præsentation, Forretning og Dataadgang.
+
+\subsection{Præsentationslag}
+
+I præsentationslaget findes det JSON/X-form API som webserveren udsteder, her bliver hver anmodning diregeret via. routing til en tilhørende Controller som håndtere den specifikke anmodning. Dette api er udstedet internt som et bibliotek, men eksternt som et URL. efter formattet \textit{service.api.converge-app.net/api/service}. Med eventuelt tilhørende resource. Dernest er disse ressourcer inddelt efter HTTP metoder, såsom POST, GET, PUT og DELETE. Hvilket relatere til CRUD operationer (Create, Read, Update, Delete). I præsentationslaget, bliver de forskellige services også samlet, dette sker via. smart routing fra Kubernetes og en applikation kaldet Traefik. Traefik sørger for mange lagpraktiske ting, såsom SSL terminering, TLS, SSL via. LetsEncrypt osv. Desuden logger traefik automatisk til ELK stack, så monitorering og logning bliver integreret. I præsentationslaget er det også hvor selve applikationen integrerer applikationskode og framework kode, dette er den eneste del af applikationen samt persistering der ikke testes, eftersom det regnes med at denne del er veltestet hos Microsoft.
+
+\subsection{Forretninglag}
+
+I Forretningslaget bliver de vigtige beslutninger taget for applikationen, her bliver selve anmodningen gjort klar til behandling, samt authentikation og authorisation valideret. Derefter blive tilhørende beslutninger taget i forhold til hvordan anmodningens tilstand skal behandles. Dette kan eksempelvis være at kalde andre services, eller sende data til opbevaring i dataadgangslaget. Her bliver brugt adskillelige teknikker som Circuit breaking, retry policies osv.
+
+Denne del af applikationen fylder ikke meget, men er den mest centrale for applikationens virkning og effekt.
+
+\subsection{Dataadgangslag}
+
+I dataadgangslaget bliver data gemt i en tilhørende data store, i dette tilfælde er MongoDB valgt, som er udrullet forskelligt fra applikationen, men med individuel adgang til. Selve adgangen er gemt bag en abstraktionsmønster kaldet et Repository, som gør at det er muligt at udskifte en data store med en anden uden forretningslogikken ændres.
+
+\section{Monitoring, Logging og Tracing}
+
+Monitorerring, logning og sporing er nok de tre mest krævede arkitektoniske meta krav for systemet. Som Sun Tzu sagde, ``If you know the enemy and know yourself, you need not fear the result of a hundred battles. If you know yourself but not the enemy, for every victory gained you will also suffer a defeat. If you know neither the enemy nor yourself, you will succumb in every battle''. Hvilket passede på kampmarket, men især også i applikationsudvikling, hvis vi ikke kender os selv, hvordan skal systemet kunne være transparent og nemt at vedligeholde og udvikle. Disse tre typer logning er vitale for et system og er brugt sammen, men til forskellige formål. Metrics er brugt til at monitorerer systemets helbred og omfang. Logning til at se statistik omkring systemet, dette er specielt smart til at lave grafer og dataset til at se systemets karakteristik samt udfald. Sporing er smart til at spore en anmodning igennem systemet og bruges til at debugge og spore edgecases for systemets funktionalitet.
