@@ -1,13 +1,14 @@
 \chapter{Klientapplikation}
 
 \section{Indledning}
-I denne sektion vil der blive redegjort, hvilken teknologi der er blevet brugt til at udvikle klientapplikationen, hvilken tanker/overvejelser er der gjort i forhold til valget og hvorfor er det effektiv for udvikleren.
+I denne sektion vil der blive redegjort, hvilken teknologi der er blevet brugt til at udvikle klientapplikationen, hvilken tanker/overvejelser er der gjort i forhold til valget og hvorfor er det effektiv for udvikleren. Samt at give et udkast på de vigtige beslutninger for udviklingen af produktet. Det skal siges at arkitekturen er det vigtigste, grundet de beslutninger der tages.
 
 \section{Web App}
-I starten af projektet blev der udarbejdet en foranalyse til at fremskaffe de informationer, for at kunne organisere og planlægge projektet. Derudover er foranalysen blevet benyttet til at tage stilling til hvad klientapplikationen skule udvikles som. Samtidig er domænemodellen og user stories er taget i betragtning og ud fra disse betragtninger er klientapplikationen udviklet som Single Page Application (SPA). SPA er en webapplikation, der passer til en enkelt webside med det mål at give en mere flydende brugeroplevelse, der ligner en desktop-applikation. 
+I starten af projektet blev der udarbejdet en foranalyse til at fremskaffe de informationer, for at kunne organisere og planlægge projektet. Derudover er foranalysen blevet benyttet til at tage stilling til hvad klientapplikationen skulle udvikles som. Samtidig er domænemodellen og user stories er taget i betragtning og ud fra disse betragtninger er klientapplikationen udviklet som Single Page Application (SPA). SPA er en webapplikation, der passer til en enkelt webside med det mål at give en mere flydende brugeroplevelse, der ligner en desktop-applikation. 
 
 Der var gjort mange tanker og overvejelser, til at valget faldt over SPA. En af de overvejelser der var gjort i forhold til at klientapplikationen, blev udviklet i SPA, for at give brugeren en bedre brugeroplevelse. Derfor var SPA et oplagt valg, da SPA er ekstremt nemt og deploye i produktion, nemmere at skalere bagenden og frontenden separat og data er fra serveren er i JSON-format.
-En anden overvejelse der blev gjort, var at der er gjort brug af plugins, server side rendering (SSR), Formik og flux arkitektur. Disse plugins er blevet benyttet i klientapplikationen, som gør udviklingsmiljøet, bliver nemmer at håndtere for udviklerne. 
+
+En anden overvejelse der blev gjort, var at der er gjort brug af plugins, server side rendering (SSR), Formik og flux arkitektur. Disse plugins er blevet benyttet i klientapplikationen, som gør udviklingsmiljøet, bliver nemmer at håndtere for udviklerne, samt en bedre oplevelse for brugeren.
  
 Grunden til at Formik er blevet benyttet, er at de fleste formhjælpere gør alt for meget magi og har ofte en betydelig ydeevne forbundet med dem. For at undgå dette, er der blevet brugt Formik biblioteket, som er med til at hjælpe udvikler med de 3 mest irriterende dele:
 
@@ -18,8 +19,10 @@ Grunden til at Formik er blevet benyttet, er at de fleste formhjælpere gør alt
 \end{itemize}
 
 Derudover er der blevet brugt flux arkitektur, som hjælper udviklerne i teamet med at skrive applikationer, der opfører sig konsekvent, kører i forskellige miljøer (klient, server) og er lette at teste. Derudover giver det en stor udvikleroplevelse, såsom redigering af live-kode kombineret med en debugger. 
-Den tredje plugin som nævnt tidligere er SSR. SSR fungere som applikations server, som giver et intuitivt sidebaseret routingsystem, Optimerer automatisk statiske sider, når det er mulig, automatisk kodespaltning for hurtigere indlæsning af sider og routing fra klientsiden med optimeret sideudhentning. 
 
+Den tredje plugin som nævnt tidligere er SSR (Server-side rendering). SSR fungere som applikations server, som giver et intuitivt sidebaseret routingsystem, Optimerer automatisk statiske sider, når det er mulig, automatisk kodespaltning for hurtigere indlæsning af sider og routing fra klientsiden med optimeret sideudhentning. 
+
+Alle disse teknologier gør det muligt at benytte et Komponent-baseret view, samtidig med at klientens tilstand er gemt i en ekstern storage layer administreret af en flux arkitektur (Immutable-transactions). Og med SSR løses nogle af dynamisk website problemer, såsom hurtigt first-time-to-render, samt optimering af Search-Engine-Optimization. Disse beslutninger danner det hieraki, som klienten har. Hvilket alt i alt danner en grænseflade, som indeholder, komponenter i en hieraktisk sammenhængen. Stores og reducers til flux, for at håndterere tilstand, og services til kommunikation med Webserveren. 
 
  
 
